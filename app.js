@@ -1,6 +1,10 @@
 //Тоглогчийн оноог цуглуулах хэрэгцээтэй/
 var scores = [0,0];
 
+//Тоглоом дууссн эсэхийг хадгалах төлөв
+var gameover ;
+
+
 //Тоглогчийн түр оноог цуглуулах хувьсагч хэрэгтэй
 var roundScore = 0;
 
@@ -21,12 +25,22 @@ function initgame()
 {
     //Тоглогчийн оноог цуглуулах хэрэгцээтэй/
 scores = [0,0];
+gameover = false;
 
 //Тоглогчийн түр оноог цуглуулах хувьсагч хэрэгтэй
 roundScore = 0;
 
 //Тоглогчийн ээлжийг хадгалдах хувьсагч хэрэгтэй 1-р тоглогч 0 2-р тоглогч 0 болгож тэмдэглэнэ.
 activePlayer = 0;
+//Тоглогчийн нэрийг буцааж гаргах
+document.getElementById("name-0").textContent= "player 1";
+document.getElementById("name-0").textContent= "player 2";
+document.getElementById("score-0").textContent="0";
+window.document.getElementById("score-0").textContent = "0";
+window.document.getElementById("score-1").textContent = "0";
+window.document.getElementById("current-0").textContent = "0";
+window.document.getElementById("current-1").textContent = "0";
+
 }
 
 var dicedom = document.querySelector(".dice")
@@ -35,7 +49,9 @@ var dicedom = document.querySelector(".dice")
 //Шоо хаях фүнкц
 document.querySelector(".btn-roll").addEventListener("click", function ()
 {
-    var dice = Math.floor(Math.random()*6)+1;
+    if(gameover !==true)
+    {
+        var dice = Math.floor(Math.random()*6)+1;
     dicedom.style.display = "block";
     dicedom.src="dice-"+dice+".png";
     if (dice!==1)
@@ -53,11 +69,15 @@ document.querySelector(".btn-roll").addEventListener("click", function ()
             switchplayer();
 
     }
+    }
+    
 })
 //hold event listener
 document.querySelector(".btn-hold").addEventListener("click",function()
 {
-    //Тоглогчийн цуглуулсан оноог хурамтлуулж нэмнэ.
+if (gameover !==true)
+{
+        //Тоглогчийн цуглуулсан оноог хурамтлуулж нэмнэ.
     //if(activePlayer === 0)
     //{
     //scores[0] = scores[0]+roundScore;}
@@ -76,10 +96,13 @@ document.getElementById("current-"+activePlayer).textContent="0";
 if(scores[activePlayer]>=20)
 {
     document.getElementById("name-"+activePlayer).textContent = "winner";
+    gameover=true;
+
 }
 else 
 {
    switchplayer();
+}
 }
 })
 //Тоглогчийн нэрийг шилжүүлэх
@@ -93,8 +116,5 @@ function switchplayer()
 }
 //Шинэ тоглоом эхлүүлэх event 
 
-document.querySelector(".btn-new").addEventListener("click",function(
-)
-{
-initgame();
-})
+document.querySelector(".btn-new").addEventListener("click",function()
+{initgame();})
