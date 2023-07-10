@@ -93,7 +93,7 @@ scores[activePlayer];
 roundScore = 0
 document.getElementById("current-"+activePlayer).textContent="0";
 
-if(scores[activePlayer]>=20)
+if(scores[activePlayer]>=100)
 {
     document.getElementById("name-"+activePlayer).textContent = "winner";
     gameover=true;
